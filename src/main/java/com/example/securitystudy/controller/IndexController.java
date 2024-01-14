@@ -1,11 +1,15 @@
 package com.example.securitystudy.controller;
 
+import com.example.securitystudy.config.auth.PrincipalDetails;
 import com.example.securitystudy.model.User;
 import com.example.securitystudy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,19 @@ public class IndexController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @GetMapping("/test/login")
+    public @ResponseBody String loginTest(
+            Authentication authentication,
+            @AuthenticationPrincipal PrincipalDetails userDetails) { // DI(의존성 주입)
+        System.out.println("/test/login ========================");
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+
+        // 두가지 방법이 있다
+        System.out.println("authentication: " + principalDetails.getUser());
+        System.out.println("userDetails: " + userDetails.getUser());
+        return "세션 정보 확인하기";
+    }
 
     @GetMapping({"", "/"})
     public String index() {

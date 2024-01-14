@@ -8,6 +8,7 @@ package com.example.securitystudy.config.auth;
 // User오브젝트타입 => UserDetails 타입 객체
 
 import com.example.securitystudy.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 // Security Session => Authentication => UserDetails
+
+@Data
 public class PrincipalDetails implements UserDetails {
 
     private User user; // 컴포지션
